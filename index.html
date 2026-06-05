@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="cs">
+
+<head>
+     <meta charset="UTF-8">
+     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+     <title>Můj tým</title>
+     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600&display=swap" rel="stylesheet">
+     <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+     <!-- Editační formulář (skrytý na začátku)-->
+     <div class="section">
+          <div id="editFormContainer">
+               <h3>Upravit člena</h3>
+               <form id="editForm">
+                    <input type="text" id="editName" placeholder="Jméno člena" required>
+                    <input type="text" id="editPin" placeholder="Pin">
+                    <input type="number" id="editBody" placeholder="Body">
+                    <input type="number" id="editPozice" placeholder="Pozice">
+                    <input type="text" id="editPocetClenu" placeholder="Počet členů">
+                    <input type="text" id="editEmail" placeholder="Email">
+                    <button type="submit">Uložit změny</button>
+                    <button type="button" id="cancelEdit">Zrušit</button>
+                    <button type="button" id="deleteMember">Smazat člena</button>
+               </form>
+          </div>
+
+          <!-- Strom -->
+          <div class="container" id="container"></div>
+
+          <!-- Formulář pro přidání člena -->
+          <form id="addForm">
+               <input type="text" id="name" placeholder="Jméno nového člena" required>
+               <input type="text" id="parent" placeholder="Nadřízený" required>
+               <input type="text" id="pin" placeholder="Pin">
+               <input type="number" id="body" placeholder="Body">
+               <input type="number" id="pozice" placeholder="Pozice">
+               <input type="text" id="pocetClenu" placeholder="Počet členů">
+               <input type="text" id="email" placeholder="Email">
+               <button type="submit"> + Přidat člena</button>
+          </form>
+     </div>
+
+     <button id="resetData">Vymazat uložená data</button>
+
+     <div id="controls">
+          <button id="exportData">Exportovat strom</button>
+          <button id="importData">Importovat strom</button>
+          <input type="file" id="importFile" style="display:none">
+          <button id="newTree">Vytvořit nový strom</button>
+          <button id="toggleTheme">Přepnout motiv</button>
+
+          <input type="search" id="searchInput" placeholder="Hledej jméno...">
+          <button id="searchBtn">Hledat</button>
+          <button id="clearSearch">Vymazat</button>
+     </div>
+
+
+     <script src="js/script.js"></script>
+
+</body>
+
+</html>
