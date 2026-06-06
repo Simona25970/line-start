@@ -269,4 +269,73 @@ function searchTreeByName(query) {
      return matches;
 }
 
-// 
+// // rozbalí cestu k labelu (od labelu nahoru) a zvýrazní ho
+function expandPathToLabel(labelEl) {
+     // highlight
+     labelEl.classList.add("highlight");
+
+     // najdi nejbližší li
+     const li = labelEl.closest("li");
+     if (!li) return;
+
+     // rozbalit všechny nadřazené <ul>
+     let current = li;
+     while (current) {
+          const parentUl = current.parentElement; // může být UL nebo null
+          if (parentUl && parentUl.tagName === "UL") {
+               // pokud je tento ul skryt (má třídu hidden), odstraň jí
+               if (parentUl.classList.contains("hidden")) parentUl.classList.remove("hidden");
+               // nastav text tlačítka u rodiče (pokud existuje)
+               const parentLi = parentUl.closest("li");
+               if (parentLi) {
+                    const parentLabel = parentLi.querySelector("label");
+                    if (parentLabel) {
+                         const btn = parentLabel.querySelector(".toggle-btn");
+                         if (btn) {
+                              btn.textContent = parentUl.classList.contains("hidden") ? "+" : "-";
+                         }
+                    }
+               }
+               current = parentUl.closest("li"); // jdi výš
+          } else break;
+     }
+
+     // posuň do zorného pole (jemně)
+     labelEl.scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+// hlavní funkce - vykoná vyhledání, rozbalení a zvýraznění
+function performSearch(query) {
+     clearHighlights();
+     if (!query || query.trim() === "") {
+          return;
+     }
+     const matches = searchTreeByName(query);
+     if (matches.length === 0) {
+          alert("Nic nenalezeno.");
+          return;
+     }
+
+     // rozbal a highlight (u prvního výsledku scroll)
+     matches.forEach((labelEl, idx) => {
+          expandPathToLabel(labelEl);
+     });
+
+     // pokud je více výsledků, můžeš je procházet — tady scroll k prvnímu
+     matches[0].scrollIntoView({ behavior: "smooth", block: "center" });
+}
+
+// eventy
+searchBtn.addEventListener("click", () => performSearch(searchInput.value));
+searchInput.addEventListener("keydown", e => {
+     if (e.key === "Enter") {
+          e.preventDefault();
+          performSearch(searchInput.value);
+     }
+});
+clearSearchBtn.addEventListener("click", () => {
+     searchInput.value = "";
+     clearHighlights();
+});
+
+
