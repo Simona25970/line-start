@@ -247,7 +247,9 @@ const searchBtn = document.getElementById("searchBtn");
 const clearSearchBtn = document.getElementById("clearSearch");
 
 function clearHighlights() {
-     document.querySelectorAll(".highlight").forEach(el.classList.remove("highlight"));
+     document.querySelectorAll(".highlight").forEach(el => {
+          el.classList.remove("highlight");
+     });
 }
 
 // najde všechny labely, které obsahují hledaný text (case-insentisive)
