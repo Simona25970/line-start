@@ -12,18 +12,22 @@
 <body>
      <!-- Editační formulář (skrytý na začátku)-->
      <div class="section">
+          <h2>Můj tým</h2>
           <div id="editFormContainer">
                <h3>Upravit člena</h3>
                <form id="editForm">
-                    <input type="text" id="editName" placeholder="Jméno člena" required>
+                    <div>
+                         <input type="text" id="editName" placeholder="Jméno člena" required>
+                         <input type="text" id="editEmail" placeholder="Email">
+                    </div>
                     <input type="text" id="editPin" placeholder="Pin">
                     <input type="number" id="editBody" placeholder="Body">
-                    <input type="number" id="editPozice" placeholder="Pozice">
-                    <input type="text" id="editPocetClenu" placeholder="Počet členů">
-                    <input type="text" id="editEmail" placeholder="Email">
+                    <input type="number" id="editPozice" placeholder="Pozice"> <br>
                     <button type="submit">Uložit změny</button>
                     <button type="button" id="cancelEdit">Zrušit</button>
-                    <button type="button" id="deleteMember">Smazat člena</button>
+                    <div>
+                         <button type="button" id="deleteMember">Smazat člena</button>
+                    </div>
                </form>
           </div>
 
@@ -35,15 +39,13 @@
                <input type="text" id="name" placeholder="Jméno nového člena" required>
                <input type="text" id="parent" placeholder="Nadřízený" required>
                <input type="text" id="pin" placeholder="Pin">
-               <input type="number" id="body" placeholder="Body">
-               <input type="number" id="pozice" placeholder="Pozice">
-               <input type="text" id="pocetClenu" placeholder="Počet členů">
                <input type="text" id="email" placeholder="Email">
+               <input type="number" id="body" placeholder="Body">
+               <input type="number" id="pozice" placeholder="Pozice"> <br>
                <button type="submit"> + Přidat člena</button>
           </form>
      </div>
 
-     <button id="resetData">Vymazat uložená data</button>
 
      <div id="controls">
           <button id="exportData">Exportovat strom</button>
@@ -52,11 +54,14 @@
           <button id="newTree">Vytvořit nový strom</button>
           <button id="toggleTheme">Přepnout motiv</button>
 
-          <input type="search" id="searchInput" placeholder="Hledej jméno...">
-          <button id="searchBtn">Hledat</button>
-          <button id="clearSearch">Vymazat</button>
+          <div id="searchContainer">
+               <input type="search" id="searchInput" placeholder="Hledej jméno...">
+               <button id="searchBtn">Hledat</button>
+               <button id="clearSearch">Vymazat</button>
+          </div>
      </div>
 
+     <button id="resetData">Vymazat uložená data</button>
 
      <script src="js/script.js"></script>
 

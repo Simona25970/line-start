@@ -10,10 +10,9 @@ document.getElementById("resetData").addEventListener("click", () => {
 let data = JSON.parse(localStorage.getItem("liniovyStrom")) || {
      name: "",
      pin: "0",
+     email: "",
      body: 0,
      pozice: 0,
-     pocetClenu: 0,
-     email: "",
      clenove: [
 
      ]
@@ -24,7 +23,21 @@ function saveData() {
 }
 
 // Vykreslení stromu
-function createContainer(person) {
+function spocitejCleny(person) {
+     if (!person.clenove || person.clenove.length === 0) {
+          return 0;
+     }
+
+     let pocet = person.clenove.length;
+
+     person.clenove.forEach(clen => {
+          pocet += spocitejCleny(clen);
+     });
+
+     return pocet;
+}
+
+function createContainer(person, level = 0) {
      const li = document.createElement("li");
 
      const hasChildren = person.clenove && person.clenove.length > 0;
@@ -34,21 +47,27 @@ function createContainer(person) {
      <div class="label-header">
      <h3>${person.name}</h3>
          <div class="icon-buttons">
-             <button class="toggle-btn">+</button>      
+             <button class="toggle-btn">
+             ${hasChildren ? "▶" : ""}
+             </button>      
          </div>
      </div>
-     <p>Pin: ${person.pin || "-"}</p>
-    <p>Body: ${person.body || 0}</p>
-    <p>Pozice: ${person.pozice || "-"}</p>
-    <p>Počet členů: ${person.pocetClenu || "-"}</p>
-    <p>Email: ${person.email || "-"}</p>
+     <p>🏷 ${person.pin || "-"}</a></p>
+         <p>✉  ${person.email || "-"}</p>
+         <p>⭐ Body: ${person.body || 0}</p>
+         <p>📈 Pozice: ${person.pozice || "-"}</p>
+         <p>👥 Počet členů: ${spocitejCleny(person) || "-"}</p>
      `;
 
      li.appendChild(label);
 
      if (hasChildren) {
           const ul = document.createElement("ul");
-          person.clenove.forEach(child => ul.appendChild(createContainer(child)));
+          person.clenove.forEach(child => ul.appendChild(createContainer(child, level + 1)));
+
+          if (level > 0)
+               ul.classList.add("hidden"); // schová se po načtení kromě kořene
+
           li.appendChild(ul);
 
           // Kliknutím na +/- sbalí nebo rozbalí
@@ -59,7 +78,7 @@ function createContainer(person) {
                     const sublist = li.querySelector("ul");
                     if (sublist) {
                          sublist.classList.toggle("hidden");
-                         toggleBtn.textContent = sublist.classList.contains("hidden") ? "+" : "-";
+                         toggleBtn.textContent = sublist.classList.contains("hidden") ? "▶" : "▼";
                     }
                });
           };
@@ -86,12 +105,11 @@ document.getElementById("addForm").addEventListener("submit", e => {
      const pin = document.getElementById("pin").value.trim() || "-";
      const body = parseFloat(document.getElementById("body").value) || "-";
      const pozice = document.getElementById("pozice").value.trim() || "-";
-     const pocetClenu = document.getElementById("pocetClenu").value.trim() || "-";
      const email = document.getElementById("email").value.trim() || "-";
 
      function findAndAddMember(person) {
           if (person.name.toLowerCase() === parentName.toLowerCase()) {
-               person.clenove.push({ name, body, pozice, pocetClenu, email, clenove: [] });
+               person.clenove.push({ name, body, pozice, email, clenove: [] });
                return true;
           }
           for (let child of person.clenove) {
@@ -118,10 +136,9 @@ function openEditForm(person) {
      currentPerson = person;
      document.getElementById("editName").value = person.name || "";
      document.getElementById("editPin").value = person.pin || "";
+     document.getElementById("editEmail").value = person.email || "";
      document.getElementById("editBody").value = person.body || "";
      document.getElementById("editPozice").value = person.pozice || "";
-     document.getElementById("editPocetClenu").value = person.pocetClenu || "";
-     document.getElementById("editEmail").value = person.email || "";
      editFormContainer.style.display = "block";
 }
 
@@ -135,10 +152,9 @@ editForm.addEventListener("submit", e => {
      if (!currentPerson) return;
      currentPerson.name = document.getElementById("editName").value.trim();
      currentPerson.pin = document.getElementById("editPin").value.trim();
+     currentPerson.email = document.getElementById("editEmail").value.trim();
      currentPerson.body = parseFloat(document.getElementById("editBody").value) || 0;
      currentPerson.pozice = document.getElementById("editPozice").value.trim();
-     currentPerson.pocetClenu = document.getElementById("editPocetClenu").value.trim();
-     currentPerson.email = document.getElementById("editEmail").value.trim();
      saveData();
      renderContainer();
      editFormContainer.style.display = "none";
