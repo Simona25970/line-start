@@ -14,7 +14,6 @@ let data = JSON.parse(localStorage.getItem("liniovyStrom")) || {
      body: 0,
      pozice: 0,
      clenove: [
-
      ]
 };
 
