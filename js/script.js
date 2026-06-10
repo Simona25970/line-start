@@ -9,10 +9,10 @@ document.getElementById("resetData").addEventListener("click", () => {
 // Výchozí data
 let data = JSON.parse(localStorage.getItem("liniovyStrom")) || {
      name: "",
-     pin: "0",
+     pin: "",
      email: "",
-     body: 0,
-     pozice: 0,
+     body: "",
+     pozice: "",
      clenove: [
      ]
 };
@@ -36,6 +36,7 @@ function spocitejCleny(person) {
      return pocet;
 }
 
+
 function createContainer(person, level = 0) {
      const li = document.createElement("li");
 
@@ -53,7 +54,7 @@ function createContainer(person, level = 0) {
      </div>
      <p>🏷 ${person.pin || "-"}</a></p>
          <p>✉  ${person.email || "-"}</p>
-         <p>⭐ Body: ${person.body || 0}</p>
+         <p>⭐ Body: ${person.body || "-"}</p>
          <p>📈 Pozice: ${person.pozice || "-"}</p>
          <p>👥 Počet členů: ${spocitejCleny(person) || "-"}</p>
      `;
@@ -108,7 +109,7 @@ document.getElementById("addForm").addEventListener("submit", e => {
 
      function findAndAddMember(person) {
           if (person.name.toLowerCase() === parentName.toLowerCase()) {
-               person.clenove.push({ name, body, pozice, email, clenove: [] });
+               person.clenove.push({ name, pin, body, pozice, email, clenove: [] });
                return true;
           }
           for (let child of person.clenove) {
@@ -152,7 +153,7 @@ editForm.addEventListener("submit", e => {
      currentPerson.name = document.getElementById("editName").value.trim();
      currentPerson.pin = document.getElementById("editPin").value.trim();
      currentPerson.email = document.getElementById("editEmail").value.trim();
-     currentPerson.body = parseFloat(document.getElementById("editBody").value) || 0;
+     currentPerson.body = parseFloat(document.getElementById("editBody").value) || trim();
      currentPerson.pozice = document.getElementById("editPozice").value.trim();
      saveData();
      renderContainer();

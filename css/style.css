@@ -87,6 +87,10 @@ form button:hover {
      color: #fff;
 }
 
+.sub {
+     background: darkgreen;
+}
+
 
 /* Tlačítka import/export / vytvořit / přepnout motiv / hledat / vymazat */
 #controls {
@@ -125,7 +129,7 @@ form button:hover {
 }
 
 .highlight {
-     background: #ff7d0a !important;
+     background: #e5934c !important;
 }
 
 /* label se lehce posune*/
@@ -275,8 +279,9 @@ form button:hover {
      cursor: pointer;
      font-size: 0.9em;
      margin-left: 0 9px;
-     width: 22px;
-     height: 22px;
+     margin-bottom: 60px;
+     width: 18px;
+     height: 18px;
 }
 
 .toggle-btn:hover {
